@@ -10,6 +10,7 @@ import re
 # Read through JSON file, create docID, parse content with listed encoding, tokenize,
 # stemming and other language processing, add doc as postings to inverted index (dictionary)
 main_index = defaultdict(list)
+url_index = dict()
 docID = 0
 
 stemmer = SnowballStemmer("english", ignore_stopwords=True)
@@ -29,10 +30,11 @@ for file in os.listdir("cyberclub_ics_uci_edu"):
             stem = stemmer.stem(alphanum)
         #print(f'Token: {token}, Stem: {stem}')
         
-        file_index[token] += 1
+        file_index[stem] += 1
     
-    for token, freq in file_index.items():
-        main_index[token].append((docID, freq))
+    for stem, freq in file_index.items():
+        main_index[stem].append((docID, freq))
+        url_index[docID] = data['url']
     
     docID += 1
 
