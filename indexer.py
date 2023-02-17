@@ -1,15 +1,16 @@
 import json
 import os
+import re
 from bs4 import BeautifulSoup
 from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import SnowballStemmer
 from collections import defaultdict
-import re
+from Posting import Posting
 
 
 # Read through JSON file, create docID, parse content with listed encoding, tokenize,
 # stemming and other language processing, add doc as postings to inverted index (dictionary)
-main_index = defaultdict(list)
+main_index = defaultdict(dict)
 url_index = dict()
 docID = 0
 
@@ -30,23 +31,28 @@ for file in os.listdir("cyberclub_ics_uci_edu"):
     for token in tokens:
         alphanum = re.sub(r'[^a-zA-Z0-9]', '', token)
         
-        if len(alphanum) != 0:
+        if len(alphanum) > 0:
             stem = stemmer.stem(alphanum)
-        #print(f'Token: {token}, Stem: {stem}')
+            
+            # print(f'Token: {token}, Stem: {stem}')
         
-        file_index[stem] += 1
+            file_index[stem] += 1
+            
+            if docID not in main_index[stem]:
+                main_index[stem][docID] = Posting(docID)
+            else:
+                main_index[stem][docID].increment_freq()
+            
     
-    #adding docIDs, frequencies, and URLs to dict and defaultdict
-    for stem, freq in file_index.items():
-        main_index[stem].append((docID, freq))
-        url_index[docID] = data['url']
+    # adding docIDs, frequencies, and URLs to dict and defaultdict
+    # for stem, freq in file_index.items():
+    #     main_index[stem].append((docID, freq))
+        
+    url_index[docID] = data['url']
     
     docID += 1
 
 print('main index:')
 print(main_index)
 print('url index')
-print(url_index)
-        
-
-            
+print(url_index)     
