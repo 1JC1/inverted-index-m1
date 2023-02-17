@@ -13,16 +13,20 @@ main_index = defaultdict(list)
 url_index = dict()
 docID = 0
 
+# using Porter2 stemmer to stem all english words except stop words
 stemmer = SnowballStemmer("english", ignore_stopwords=True)
 
+# opening each sub directory in dev directory
 for file in os.listdir("cyberclub_ics_uci_edu"):
     file_index = defaultdict(int)
     
+    # opening each file and parsing data
     with open("cyberclub_ics_uci_edu/" + file) as f:
         data = json.load(f)
         soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml', from_encoding = data['encoding'])
         tokens = word_tokenize(soup.get_text())
     
+    #tokenizing alphanumerically
     for token in tokens:
         alphanum = re.sub(r'[^a-zA-Z0-9]', '', token)
         
@@ -32,13 +36,17 @@ for file in os.listdir("cyberclub_ics_uci_edu"):
         
         file_index[stem] += 1
     
+    #adding docIDs, frequencies, and URLs to dict and defaultdict
     for stem, freq in file_index.items():
         main_index[stem].append((docID, freq))
         url_index[docID] = data['url']
     
     docID += 1
 
+print('main index:')
 print(main_index)
+print('url index')
+print(url_index)
         
 
             
