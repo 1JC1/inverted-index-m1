@@ -33,6 +33,8 @@ for file in os.listdir("cyberclub_ics_uci_edu"):
     
     for token, freq in file_index.items():
         main_index[token].append((docID, freq))
+    
+    docID += 1
 
 print(main_index)
         
