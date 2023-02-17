@@ -17,31 +17,34 @@ docID = 0
 stemmer = SnowballStemmer("english", ignore_stopwords=True)
 
 # opening each sub directory in dev directory
-for file in os.listdir("cyberclub_ics_uci_edu"):
-    file_index = defaultdict(int)
-    
-    # opening each file and parsing data
-    with open("cyberclub_ics_uci_edu/" + file) as f:
-        data = json.load(f)
-        soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml', from_encoding = data['encoding'])
-        tokens = word_tokenize(soup.get_text())
-    
-    #tokenizing alphanumerically
-    for token in tokens:
-        alphanum = re.sub(r'[^a-zA-Z0-9]', '', token)
+os.chdir("../DEV")
+for dir in os.listdir():
+    for file in os.listdir(dir):
+        file_index = defaultdict(int)
         
-        if len(alphanum) != 0:
-            stem = stemmer.stem(alphanum)
-        #print(f'Token: {token}, Stem: {stem}')
+        # opening each file and parsing data
+        with open(dir + '/' + file) as f:
+            data = json.load(f)
+            soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml-xml', from_encoding = data['encoding'])
+            tokens = word_tokenize(soup.get_text())
         
-        file_index[stem] += 1
-    
-    #adding docIDs, frequencies, and URLs to dict and defaultdict
-    for stem, freq in file_index.items():
-        main_index[stem].append((docID, freq))
-        url_index[docID] = data['url']
-    
-    docID += 1
+        #tokenizing alphanumerically
+        for token in tokens:
+            alphanum = re.sub(r'[^a-zA-Z0-9]', '', token)
+            
+            if len(alphanum) != 0:
+                stem = stemmer.stem(alphanum)
+            #print(f'Token: {token}, Stem: {stem}')
+            
+            file_index[stem] += 1
+        
+        #adding docIDs, frequencies, and URLs to dict and defaultdict
+        for stem, freq in file_index.items():
+            main_index[stem].append((docID, freq))
+            url_index[docID] = data['url']
+        
+        docID += 1
+    print(f'Directory {dir} done')    
 
 print('main index:')
 print(main_index)
