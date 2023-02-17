@@ -3,6 +3,7 @@ import os
 from bs4 import BeautifulSoup
 from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import SnowballStemmer
+import re
 
 
 # Read through JSON file, create docID, parse content with listed encoding, tokenize,
@@ -19,6 +20,10 @@ for file in os.listdir("cyberclub_ics_uci_edu"):
     tokens = word_tokenize(soup.get_text())
     
     for token in tokens:
-        stem = stemmer.stem(token)
+        alphanum = re.sub(r'[^a-zA-Z0-9]', '', token)
+        if len(alphanum) != 0:
+            stem = stemmer.stem(alphanum)
+        print(f'Token: {token}, Stem: {stem}')
+        
 
             
