@@ -34,7 +34,11 @@ def indexer():
                 # opening each file and parsing data
                 if os.path.splitext(file)[1] == '.json':
                     with open(dir + '/' + file) as f:
-                        data = json.load(f)
+                        try:
+                            data = json.load(f)
+                        except:
+                            print(f"Directory: {dir}, File: {file}")
+                            continue
                         soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml-xml', from_encoding = data['encoding'])
                         tokens = word_tokenize(soup.get_text())
                     
@@ -64,7 +68,7 @@ def indexer():
                 docID += 1
 
             print(f'Directory {dir} done\n')
-            break
+            # break
 
     os.chdir("../inverted-index-m1")
     
