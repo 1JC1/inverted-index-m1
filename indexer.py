@@ -36,8 +36,9 @@ def indexer():
                     with open(dir + '/' + file) as f:
                         try:
                             data = json.load(f)
-                        except:
+                        except Exception as e:
                             print(f"Directory: {dir}, File: {file}")
+                            print("Error: {e}")
                             continue
                         soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml-xml', from_encoding = data['encoding'])
                         tokens = word_tokenize(soup.get_text())
