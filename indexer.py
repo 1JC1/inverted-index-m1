@@ -21,6 +21,8 @@ stemmer = SnowballStemmer("english", ignore_stopwords=True)
 os.chdir("../DEV")
 for dir in os.listdir():
     if dir != '.DS_Store':
+        print(f'Directory {dir} started')
+        
         for file in os.listdir(dir):
             file_index = defaultdict(int)
             
@@ -56,7 +58,8 @@ for dir in os.listdir():
                 
             docID += 1
 
-    print(f'Directory {dir} done')    
+        print(f'Directory {dir} done\n')
+        break
       
 with open("main_index.json", 'w') as f:
     json.dump(main_index, f)
@@ -64,7 +67,8 @@ with open("main_index.json", 'w') as f:
     
 print(f"Number of documents: {docID + 1}")
 print(f"Number of tokens: {len(main_index)}")
-print('main index:')
-print(main_index)
-print('url index')
-print(url_index)  
+
+# print('main index:')
+# print(main_index)
+# print('url index')
+# print(url_index)  
