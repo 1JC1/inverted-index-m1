@@ -44,7 +44,7 @@ def indexer():
                             continue
 
                         # using BeautifulSoup to parse data
-                        soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml-xml', from_encoding = data['encoding'])
+                        soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml', from_encoding = data['encoding'])
                         tokens = word_tokenize(soup.get_text())
                     
                     # tokenizing alphanumerically
