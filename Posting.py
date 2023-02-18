@@ -1,3 +1,4 @@
+import json
 class Posting:
     def __init__(self, inputDocID = None, freq = 0) -> None:
         self.docID = inputDocID
@@ -20,3 +21,7 @@ class Posting:
     
     def __repr__(self) -> str:
         return f"(docID: {self.docID}, freq: {self.freq})"
+    
+    def to_json(self):
+        # return json.dumps(dict(self), ensure_ascii=False)
+        return json.dumps(self, default=lambda o: o.__dict__)
