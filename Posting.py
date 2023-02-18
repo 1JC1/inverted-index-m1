@@ -1,8 +1,8 @@
 import json
 class Posting:
     '''class object for keeping track of instances in the index'''
-    def __init__(self, inputDocID = None, freq = 0) -> None:
-        self.docID = inputDocID
+    def __init__(self, freq = 0) -> None:
+        # self.docID = inputDocID
         self.freq = freq
         
     def get_docID(self):

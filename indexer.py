@@ -62,7 +62,7 @@ def indexer():
                             # creating a Posting object to easily access docID and frequencies of tokens
                             # & putting the Posting objects into the main_index
                             if docID not in main_index[stem]:
-                                main_index[stem][docID] = Posting(docID)
+                                main_index[stem][docID] = Posting()
                             else:
                                 main_index[stem][docID].increment_freq()
                 
