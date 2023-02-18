@@ -1,6 +1,4 @@
-import json
-import os
-import re
+import json, os, re, sys
 from bs4 import BeautifulSoup
 from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import SnowballStemmer
@@ -90,6 +88,7 @@ def indexer():
         
     print(f"Number of documents: {docID + 1}")
     print(f"Number of tokens: {len(main_index)}")
+    print(sys.getsizeof(main_index))
 
     # print('main index:')
     # print(main_index)
