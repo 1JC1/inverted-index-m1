@@ -31,7 +31,7 @@ def indexer():
             
             # opening the subdirectories in dev directory
             for file in os.listdir(dir):
-                file_index = defaultdict(int)
+                # file_index = defaultdict(int)
                 
                 # opening each file in subdirectories and parsing data
                 if os.path.splitext(file)[1] == '.json':
@@ -59,7 +59,7 @@ def indexer():
                             
                             # print(f'Token: {token}, Stem: {stem}')
                         
-                            file_index[stem] += 1
+                            # file_index[stem] += 1
                             
                             # creating a Posting object to easily access docID and frequencies of tokens
                             # & putting the Posting objects into the main_index
