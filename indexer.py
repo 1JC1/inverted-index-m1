@@ -47,33 +47,33 @@ def indexer():
                         soup = BeautifulSoup(data['content'].encode(data['encoding']), 'lxml', from_encoding = data['encoding'])
                         tokens = word_tokenize(soup.get_text())
                     
-                    # tokenizing alphanumerically
-                    for token in tokens:
-                        alphanum = re.sub(r'[^a-zA-Z0-9]', '', token)
-                        
-                        # only allowing alphanumeric characters to be stemmed
-                        if len(alphanum) > 0:
-                            stem = stemmer.stem(alphanum)
+                        # tokenizing alphanumerically
+                        for token in tokens:
+                            alphanum = re.sub(r'[^a-zA-Z0-9]', '', token)
                             
-                            # print(f'Token: {token}, Stem: {stem}')
-                        
-                            # file_index[stem] += 1
+                            # only allowing alphanumeric characters to be stemmed
+                            if len(alphanum) > 0:
+                                stem = stemmer.stem(alphanum)
+                                
+                                # print(f'Token: {token}, Stem: {stem}')
                             
-                            # creating a Posting object to easily access docID and frequencies of tokens
-                            # & putting the Posting objects into the main_index
-                            if docID not in main_index[stem]:
-                                main_index[stem][docID] = Posting()
-                            else:
-                                main_index[stem][docID].increment_freq()
+                                # file_index[stem] += 1
+                                
+                                # creating a Posting object to easily access docID and frequencies of tokens
+                                # & putting the Posting objects into the main_index
+                                if docID not in main_index[stem]:
+                                    main_index[stem][docID] = Posting()
+                                else:
+                                    main_index[stem][docID].increment_freq()
                 
         
-                # adding docIDs, frequencies, and URLs to dict and defaultdict
-                # for stem, freq in file_index.items():
-                #     main_index[stem].append((docID, freq))
+                        # adding docIDs, frequencies, and URLs to dict and defaultdict
+                        # for stem, freq in file_index.items():
+                        #     main_index[stem].append((docID, freq))
+                                    
+                        url_index[docID] = data['url']
                             
-                url_index[docID] = data['url']
-                    
-                docID += 1
+                        docID += 1
 
             print(f'Directory {dir} done\n')
             # break
