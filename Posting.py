@@ -18,10 +18,10 @@ class Posting:
         self.docID = newDocID
         
     def __str__(self) -> str:
-        return f"Posting(docID: {self.docID}, freq: {self.freq})"
+        return f"Posting(freq: {self.freq})"
     
     def __repr__(self) -> str:
-        return f"(docID: {self.docID}, freq: {self.freq})"
+        return f"(freq: {self.freq})"
     
     # allows use of json.dump into main_index.json
     def to_json(self):
