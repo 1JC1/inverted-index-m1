@@ -88,7 +88,7 @@ def indexer():
         
     print(f"Number of documents: {docID + 1}")
     print(f"Number of tokens: {len(main_index)}")
-    print(sys.getsizeof(main_index))
+    print(f"Size of index: {sys.getsizeof(main_index)}")
 
     # print('main index:')
     # print(main_index)
